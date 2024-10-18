@@ -31,6 +31,7 @@ int main()
 	graph["thom"] = {};
 	graph["jonny"] = {};
 	queue<string> search_queue;
+	unordered_map<string, int> searched;
 	string person;
 	string wanted;
 	search_queue.push("you");
@@ -40,16 +41,17 @@ int main()
 	{
 		person = search_queue.front();
 		search_queue.pop();
-
-		if (person != wanted)
-		{
-			search_queue = plis(search_queue, graph, person);
-
-		}
-		else
-		{
-			cout << "this is he";
-			break;
+		if (searched[person] != 1) {
+			if (person != wanted)
+			{
+				search_queue = plis(search_queue, graph, person);
+				searched[person] = 1;
+			}
+			else
+			{
+				cout << "this is he";
+				break;
+			}
 		}
 	}
 	if (search_queue.empty() && person != wanted)
@@ -58,4 +60,3 @@ int main()
 	}
 
 }
-
