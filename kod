@@ -1,0 +1,61 @@
+#include <iostream>
+#include <list>
+#include <vector>
+#include <unordered_map>
+#include <queue>
+using namespace std;
+
+queue<string> plis(queue<string> search_queue, unordered_map<string, vector<string>> graph, string name) 
+{
+	if (!graph[name].empty())
+	{
+		for (auto item : graph[name])
+		{
+			search_queue.push(item);
+		}
+	}
+
+	return search_queue;
+}
+
+int main()
+{
+	unordered_map<string, vector<string>> graph;
+	
+	graph["you"] = { "bob", "alice", "claire" };
+	graph["bob"] = { "anuj", "peggy" };
+	graph["alice"] = { "peggy" };
+	graph["claire"] = { "thom", "jonny" };
+	graph["anuj"] = {};
+	graph["peggy"] = {};
+	graph["thom"] = {};
+	graph["jonny"] = {};
+	queue<string> search_queue;
+	string person;
+	string wanted;
+	search_queue.push("you");
+	cin >> wanted;
+	string i;
+	while (!search_queue.empty())
+	{
+		person = search_queue.front();
+		search_queue.pop();
+
+		if (person != wanted)
+		{
+			search_queue = plis(search_queue, graph, person);
+
+		}
+		else
+		{
+			cout << "this is he";
+			break;
+		}
+	}
+	if (search_queue.empty() && person != wanted)
+	{
+		cout << "Person not found!" << endl;
+	}
+
+}
+
